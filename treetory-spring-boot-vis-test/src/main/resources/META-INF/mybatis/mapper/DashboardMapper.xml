@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.treetory.test.mvc.mapper.DashboardMapper">
+	
+	<!-- 조회 : 멀티 -->
+    <select id="getCorelResultDuringRecent10Seconds" parameterType="long" resultType="hashmap">
+		SELECT 
+				a.id as id, 
+		    	convert( a.category, char) as category, 
+		    	concat(' ' , convert(a.create_ts, char)) as create_ts, 
+				a.message, 
+				inet_ntoa(a.s_ip) as s_ip,
+				'' as s_ip_group,  
+				inet_ntoa(a.d_ip) as d_ip, 
+				'' as d_ip_group, 
+				convert(a.s_port, char(5)) as s_port, 
+				convert(a.d_port, char(5)) as d_port, 
+				a.protocol_name as protocol_name,  
+				a.rule, 
+				c.code_name as rule_class_name, 
+				convert( a.dev_id, char) as dev_id, 
+				f.name,
+				a.is_ack, 
+				a.ack_user,
+				a.org_id,
+				a.proxy_id,
+				d.name as org_name,
+				e.name as proxy_name,
+				a.result_id,
+				<!-- 
+				FROM_UNIXTIME(FLOOR((#{value} - (10 * 1000)) / 1000)) as start,
+				FROM_UNIXTIME(FLOOR(#{value} / 1000)) as end
+				 -->
+				a.create_ts as start,
+				ADDTIME(a.create_ts, '00:00:01.000') as end
+		FROM 
+				moca_rule 			as b, 
+				moca_attribute 		as c,
+				moca_result 		as a
+		LEFT OUTER JOIN 
+				moca_org 			as d 
+		ON 		a.org_id = d.org_id 
+		LEFT OUTER JOIN 
+				moca_proxy_server 	as e
+		ON 		a.proxy_id = e.proxy_id
+		LEFT OUTER JOIN 
+				moca_device 		as f
+		ON 		a.dev_id = f.id
+		LEFT OUTER JOIN 
+				moca_device_group 	as g
+		ON 		f.group_id = g.id
+		WHERE 	c.major_code = 9
+		AND 	b.att_rule_class = c.minor_code
+		AND 	a.rule = b.name
+		<if test="value != null and value > 0">
+			AND		unix_timestamp(create_ts) * 1000 <![CDATA[>=]]> #{value} - (10 * 1000)
+			AND 	unix_timestamp(create_ts) * 1000 <![CDATA[< ]]>	#{value}
+		</if>
+		<if test="value == 0">
+			LIMIT	10
+		</if>
+	</select>
+	
+	<!-- Deprecated -->
+	<!-- 테스트용 - mockup 생성을 위해 잠깐 만든 것임 -->
+	<insert id="insertMocaResultTest" parameterType="java.util.List">
+		insert
+		into	moca_result
+		(		result_id
+		,		p_idx
+		,		rule
+		,		create_ts
+		,		message
+		,		alert_by
+		,		alert_to
+		,		dev_id
+		,		org_id
+		,		proxy_id
+		,		protocol_name
+		)
+		values
+		<foreach collection="list" item="item" separator="),(" open="(" close=")">
+				#{item.result_id}
+			,	201807
+			,	#{item.rule}
+			,	now()
+			,	#{item.message}
+			,	#{item.alert_by}
+			,	#{item.alert_to}
+			,	#{item.dev_id}
+			,	#{item.org_id}
+			,	#{item.proxy_id}
+			,	#{item.protocol_name}
+		</foreach>
+	</insert>
+	
+</mapper>
