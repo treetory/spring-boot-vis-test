@@ -32,7 +32,9 @@
 				FROM_UNIXTIME(FLOOR(#{value} / 1000)) as end
 				 -->
 				a.create_ts as start,
-				ADDTIME(a.create_ts, '00:00:01.000') as end
+				ADDTIME(a.create_ts, '00:00:01.000') as end,
+				a.rule as content,
+				a.message as content
 		FROM 
 				moca_rule 			as b, 
 				moca_attribute 		as c,
@@ -53,7 +55,7 @@
 		AND 	b.att_rule_class = c.minor_code
 		AND 	a.rule = b.name
 		<if test="value != null and value > 0">
-			AND		unix_timestamp(create_ts) * 1000 <![CDATA[>=]]> #{value} - (10 * 1000)
+			AND		unix_timestamp(create_ts) * 1000 <![CDATA[>=]]> #{value} - (1 * 1000)
 			AND 	unix_timestamp(create_ts) * 1000 <![CDATA[< ]]>	#{value}
 		</if>
 		<if test="value == 0">
