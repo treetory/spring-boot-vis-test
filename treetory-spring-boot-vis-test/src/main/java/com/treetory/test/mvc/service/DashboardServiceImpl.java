@@ -20,4 +20,9 @@ public class DashboardServiceImpl implements DashboardService {
 		return dMapper.getCorelResultDuringRecent10Seconds(System.currentTimeMillis());
 	}
 
+	@Override
+	public Map<String, Object> getRecentMocaResultCount() throws SQLException {
+		return dMapper.getRecentMocaResultCount();
+	}
+
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,24 +29,33 @@ public class ScheduledTasks {
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
+	private static int i = 0;
+	
 	@Scheduled(fixedRate = 1 * 1000)
 	@Transactional(isolation=Isolation.DEFAULT, propagation=Propagation.REQUIRED, rollbackFor=SQLException.class)
 	public void sendCorelResultToSplunk() throws IOException, InterruptedException, SQLException, ParseException {
 		
-		List<Map<String, Object>> param = null;
+		List<Map<String, Object>> target = null;
 		int cnt = 0;
 		
 		try {
 			
-			//String dateStr = sdf.format(new Date(System.currentTimeMillis()));
+			i++;
 			
-			param = dMapper.getCorelResultDuringRecent10Seconds(0);
+			target = dMapper.getCorelResultDuringRecent10Seconds(0);
+			
+			if (i==10) {
+				i=0;
+			}
+			
+			List<Map<String, Object>> param = new ArrayList<Map<String, Object>>();
+			param.add(target.get(i));
 			
 			cnt = dMapper.insertMocaResultTest(param);
 			
 		} finally {
-			if (param.size() != cnt) {
-				LOG.debug("param size = {} ==> inserted count = {}", param.size(), cnt);
+			if (cnt != 1) {
+				LOG.debug("inserted count is {}.", cnt);
 			}
 		}
 		

@@ -1,6 +1,7 @@
 package com.treetory.test.mvc.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,4 +57,26 @@ public class DashboardController {
 		return result;		
 	}
 	
+	@RequestMapping(
+			value = "/result/count", 
+			method = { RequestMethod.GET }, 
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+	public Map<String, Object> getCorelResultCount(
+			HttpServletRequest req, HttpServletResponse res
+			) throws Exception {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		try {
+			
+			result = dService.getRecentMocaResultCount();
+			
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return result;		
+	}
 }

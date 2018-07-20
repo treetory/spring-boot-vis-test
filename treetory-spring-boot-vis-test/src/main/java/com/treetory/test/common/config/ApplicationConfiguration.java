@@ -107,6 +107,7 @@ public class ApplicationConfiguration implements InitializingBean, ApplicationLi
     	
     	// The examples of vis.js
     	registry.addViewController("/").setViewName("index");
+    	// timeline
     	registry.addViewController("/timeline/basicUsage").setViewName("/timeline/basicUsage");
     	registry.addViewController("/timeline/dataSerialization").setViewName("/timeline/dataHandling/dataSerialization");
     	registry.addViewController("/timeline/loadExternalData").setViewName("/timeline/dataHandling/loadExternalData");
@@ -162,6 +163,30 @@ public class ApplicationConfiguration implements InitializingBean, ApplicationLi
     	registry.addViewController("/timeline/itemClassNames").setViewName("/timeline/itemClassNames");
     	registry.addViewController("/timeline/itemTemplates").setViewName("/timeline/itemTemplates");
     	registry.addViewController("/timeline/weekStyling").setViewName("/timeline/weekStyling");
+    	
+    	// graph2d
+    	registry.addViewController("/graph2d/basic").setViewName("/graph2d/01_basic");
+    	registry.addViewController("/graph2d/bars").setViewName("/graph2d/02_bars");
+    	registry.addViewController("/graph2d/groups").setViewName("/graph2d/03_groups");
+    	registry.addViewController("/graph2d/rightAxis").setViewName("/graph2d/04_rightAxis");
+    	registry.addViewController("/graph2d/bothAxis").setViewName("/graph2d/05_bothAxis");
+    	registry.addViewController("/graph2d/interpolation").setViewName("/graph2d/06_interpolation");
+    	registry.addViewController("/graph2d/scrollingAndSorting").setViewName("/graph2d/07_scrollingAndSorting");
+    	registry.addViewController("/graph2d/performance").setViewName("/graph2d/08_performance");
+    	registry.addViewController("/graph2d/external_legend").setViewName("/graph2d/09_external_legend");
+    	registry.addViewController("/graph2d/barsSideBySide").setViewName("/graph2d/10_barsSideBySide");
+    	registry.addViewController("/graph2d/barsSideBySideGroups").setViewName("/graph2d/11_barsSideBySideGroups");
+    	registry.addViewController("/graph2d/customRange").setViewName("/graph2d/12_customRange");
+    	registry.addViewController("/graph2d/localization").setViewName("/graph2d/13_localization");
+    	registry.addViewController("/graph2d/toggleGroups").setViewName("/graph2d/14_toggleGroups");
+    	registry.addViewController("/graph2d/streaming_data").setViewName("/graph2d/15_streaming_data");
+    	registry.addViewController("/graph2d/bothAxisTitles").setViewName("/graph2d/16_bothAxisTitles");
+    	registry.addViewController("/graph2d/dynamicStyling").setViewName("/graph2d/17_dynamicStyling");
+    	registry.addViewController("/graph2d/scatterplot").setViewName("/graph2d/18_scatterplot");
+    	registry.addViewController("/graph2d/labels").setViewName("/graph2d/19_labels");
+    	registry.addViewController("/graph2d/shading").setViewName("/graph2d/20_shading");
+    	registry.addViewController("/graph2d/barsWithEnd").setViewName("/graph2d/21_barsWithEnd");
+    	
     }
     
     @Override

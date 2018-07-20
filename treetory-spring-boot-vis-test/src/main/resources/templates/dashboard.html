@@ -7,8 +7,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
   	<style type="text/css">
+  		
+  		@charset "UTF-8";
+    	
     	body, html {
       	font-family: sans-serif;
+    	}
+    	
+    	.visualization {
+    	padding: 10px 10px 10px 10px;
     	}
   	</style>
 
@@ -20,9 +27,18 @@
   
 </head>
 <body>
-	
-	<div id="visualization"></div>
-	<div id="loading">loading...</div>
+	<div id="loading">
+		<h2>아래는 대시보드 샘플 연습해보는 것 입니다.</h2>
+		<p style="max-width: 700px;">
+		  룰루루~~
+		</p>
+		<p>
+			<input type="button" id="start" value="START"/>
+			<input type="button" id="stop" value="STOP"/>
+		</p>
+	</div>
+	<div class="visualization" id="visualization_streaming"></div>
+	<div class="visualization" id="visualization_timeline"></div>
 	
 </body>
 <script src="/js/dashboard.js"></script>

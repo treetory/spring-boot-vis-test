@@ -9,10 +9,10 @@
 		    	convert( a.category, char) as category, 
 		    	concat(' ' , convert(a.create_ts, char)) as create_ts, 
 				a.message, 
-				inet_ntoa(a.s_ip) as s_ip,
-				'' as s_ip_group,  
-				inet_ntoa(a.d_ip) as d_ip, 
-				'' as d_ip_group, 
+				inet_ntoa(a.s_ip) as s_ip_str,
+				a.s_ip as s_ip,  
+				inet_ntoa(a.d_ip) as d_ip_str, 
+				a.d_ip as d_ip, 
 				convert(a.s_port, char(5)) as s_port, 
 				convert(a.d_port, char(5)) as d_port, 
 				a.protocol_name as protocol_name,  
@@ -32,9 +32,9 @@
 				FROM_UNIXTIME(FLOOR(#{value} / 1000)) as end
 				 -->
 				a.create_ts as start,
-				ADDTIME(a.create_ts, '00:00:01.000') as end,
-				a.rule as content,
-				a.message as content
+				ADDTIME(a.create_ts, '00:00:00.800') as end,
+				inet_ntoa(a.s_ip) as content,
+				a.rule as title
 		FROM 
 				moca_rule 			as b, 
 				moca_attribute 		as c,
@@ -55,12 +55,24 @@
 		AND 	b.att_rule_class = c.minor_code
 		AND 	a.rule = b.name
 		<if test="value != null and value > 0">
-			AND		unix_timestamp(create_ts) * 1000 <![CDATA[>=]]> #{value} - (1 * 1000)
+			AND		unix_timestamp(create_ts) * 1000 <![CDATA[>=]]> #{value} - (3 * 1000)
 			AND 	unix_timestamp(create_ts) * 1000 <![CDATA[< ]]>	#{value}
 		</if>
 		<if test="value == 0">
+			AND		a.s_ip != 0
 			LIMIT	10
 		</if>
+	</select>
+	
+	<select id="getRecentMocaResultCount" resultType="hashmap">
+		SELECT	count(id) 	as alert_count
+		,		create_ts	as create_ts
+		FROM	moca_result
+		GROUP BY
+				create_ts
+		ORDER BY
+				create_ts DESC
+		LIMIT	1
 	</select>
 	
 	<!-- Deprecated -->
@@ -79,6 +91,10 @@
 		,		org_id
 		,		proxy_id
 		,		protocol_name
+		,		s_ip
+		,		s_port
+		,		d_ip
+		,		d_port
 		)
 		values
 		<foreach collection="list" item="item" separator="),(" open="(" close=")">
@@ -93,6 +109,10 @@
 			,	#{item.org_id}
 			,	#{item.proxy_id}
 			,	#{item.protocol_name}
+			,	#{item.s_ip}
+			,	#{item.s_port}
+			,	#{item.d_ip}
+			,	#{item.d_port}
 		</foreach>
 	</insert>
 	
