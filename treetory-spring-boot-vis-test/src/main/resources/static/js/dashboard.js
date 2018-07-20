@@ -76,6 +76,9 @@ var MocaResultTimeline = (function() {
 		return this.data;
 	}
 	
+	/*
+	 * 메소드 5 : 설정한 시간 간격에 따라 조회 스케줄 등록
+	 */
 	MocaResultTimeline.prototype.setInterval = function(_this, _interval) {
 		_this.interval = setInterval(function() {
 			_this.retrieve(_this);
@@ -83,6 +86,9 @@ var MocaResultTimeline = (function() {
 		}, _interval);
 	}
 	
+	/*
+	 * 메소드 6 : 등록된 조회 스케줄 취소
+	 */
 	MocaResultTimeline.prototype.clearInterval = function(_this) {
 		if (_this.interval != null) {
 			clearInterval(_this.interval);
@@ -95,7 +101,7 @@ var MocaResultTimeline = (function() {
 }()); 
 
 /**
- * 
+ * 타임라인 그래프를 moca_result 정보와 연동하여 테스트해 봄
  * @returns
  */
 var MocaResultStreamingDataGraph = (function() {
@@ -128,6 +134,9 @@ var MocaResultStreamingDataGraph = (function() {
 		this.graph2d = new vis.Graph2d(this.container, this.dataset, this.options);
 	}
 	
+	/*
+	 * 메소드 1 : 시계열 추이를 그리기 위한 실시간 집계 데이터 조회
+	 */
 	MocaResultStreamingDataGraph.prototype.retrieve = function(_this) {
 		$.ajax({
 			url : "/result/count",
@@ -197,6 +206,9 @@ var MocaResultStreamingDataGraph = (function() {
 		}
 	}
 	
+	/*
+	 * 메소드 4 : 설정한 시간 간격에 따라 조회 스케줄 등록
+	 */
 	MocaResultStreamingDataGraph.prototype.setInterval = function(_this, _interval) {
 		_this.interval = setInterval(function() {
 			_this.retrieve(_this);
@@ -204,6 +216,9 @@ var MocaResultStreamingDataGraph = (function() {
 		}, _interval);
 	}
 	
+	/*
+	 * 메소드 5 : 등록된 조회 스케줄 취소
+	 */
 	MocaResultStreamingDataGraph.prototype.clearInterval = function(_this) {
 		if (_this.interval != null) {
 			clearInterval(_this.interval);
@@ -215,32 +230,20 @@ var MocaResultStreamingDataGraph = (function() {
 	
 }());
 
-
 $(document).ready(function() {
 	
-	/**
-	 * 타임라인 객체를 생성하여, 데이터 조회를 위한 인터벌을 세팅하여 렌더링 테스트
-	 
-	let mr = new MocaResultTimeline();
-	var cnt = 0;
-	var aaa = setInterval(function() {
-		cnt++;
-		mr.retrieve(mr);
-		if (cnt == 10) {
-			clearInterval(aaa);
-		}
-	}, 3000);
-	console.log(aaa);
-	*/
+	// 타임라인 객체 생성
 	let mr_timeline = new MocaResultTimeline();
-	
+	// 스트리밍 데이터 그래프 객체 생성
 	let mr_streaming = new MocaResultStreamingDataGraph("discrete");
 	
+	// 시작 이벤트
 	$('#start').click(function(e){
 		mr_timeline.setInterval(mr_timeline, 3000);
 		mr_streaming.setInterval(mr_streaming, 3000);
 	});
 	
+	// 정지 이벤트
 	$('#stop').click(function(e){
 		console.log(mr_timeline.retrieve_count+" : "+mr_streaming.retrieve_count);
 		mr_timeline.clearInterval(mr_timeline, 3000);
