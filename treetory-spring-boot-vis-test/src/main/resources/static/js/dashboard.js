@@ -79,9 +79,8 @@ var MocaResultTimeline = (function() {
 	function MocaResultTimeline() {
 		this.dashboard_items = null;
 		this.timeline_container = document.getElementById('visualization_timeline');
-		this.data = new Array();
 		this.timeline_groups = new vis.DataSet();
-		this.timeline_items = new vis.DataSet(this.data);
+		this.timeline_items = new vis.DataSet();
 		this.timeline_options = 
 		{
 			//rtl : true,
@@ -92,7 +91,7 @@ var MocaResultTimeline = (function() {
 		    zoomable: false,
 		    //zoomKey: 'ctrlKey',
 		    minHeight: 200,
-		    maxHeight: 300,
+		    maxHeight: 500,
 		    start: vis.moment().add(-5, 'seconds'),
 		    end: vis.moment().add(5, 'seconds'),
 		};
@@ -121,8 +120,8 @@ var MocaResultTimeline = (function() {
 	 */
 	MocaResultTimeline.prototype.setData = function(_this, result) {
 		
+		// add retrieved data to DataSet(timeline_items)
 		for (var i=0; i<result.length; i++) {
-			_this.data.push(result[i]);
 			_this.timeline_items.add(result[i]);
 		}
 		
@@ -135,7 +134,7 @@ var MocaResultTimeline = (function() {
 	    var oldIds = _this.timeline_items.getIds(
 		{
 			filter: function (item) {
-				//console.log(_this.timeline_items.length);
+				// interval = 10 초 * 10 이므로 100초 간의 데이터만 타임라인안에 남겨놓는다.
 				return (new Date(item.end + 10 * interval) < range.start);
 		    }
 		});
@@ -147,26 +146,15 @@ var MocaResultTimeline = (function() {
 	 * 메소드 3 : timeline 의 그래픽 이펙트를 처리한다.
 	 */
 	MocaResultTimeline.prototype.setEffect = function(_this) {
-		/*
-		let _data = _this.getData();
-		if (_data.length > 0) {
-			if (_data.length > 5) {
-				_this.timeline.moveTo(_data[_data.length-4].end);
-			} else {
-				_this.timeline.moveTo(_data[_data.length-1].end);
-			}
-		} else {
-			
-		}
-		*/
+		// 타임라인의 중앙을 지금 시간으로부터 4초전의 시간을 위치시킨다.(더 많은 데이터를 화면에 보여주기 위함)
 		_this.timeline.moveTo(vis.moment().add(-4, 'seconds'));
 	}
 	
 	/*
 	 * 메소드 4 : timeline 에 저장된 데이터를 가져온다.
 	 */
-	MocaResultTimeline.prototype.getData = function() {
-		return this.data;
+	MocaResultTimeline.prototype.getDataSet = function() {
+		return this.timeline_items;
 	}
 	
 	/*
@@ -229,7 +217,8 @@ var MocaResultStreamingDataGraph = (function() {
 		    },
 		    shaded: {
 		    	orientation: 'bottom' // top, bottom
-		    }
+		    },
+		    zoomable: false
 		};
 		this.graph2d = new vis.Graph2d(this.container, this.dataset, this.options);
 	}
@@ -257,11 +246,18 @@ var MocaResultStreamingDataGraph = (function() {
 		var oldIds = _this.dataset.getIds(
 		{
 			filter: function (item) {
-				return item.x < range.start - interval;
+				
+				if (_this.options.dataAxis.left.range.max == 1) {
+					_this.options.dataAxis.left.range.max = (item.y + 10);
+					_this.graph2d.setOptions(_this.options);
+				}
+				
+				return (new Date(item.x) < range.start);
 		    }
 		});
 		_this.dataset.remove(oldIds);
 		
+		//console.log(_this.dataset.length);
 		_this.setRender(_this, result);
 	}
 	
