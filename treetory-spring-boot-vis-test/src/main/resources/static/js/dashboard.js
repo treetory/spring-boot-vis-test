@@ -80,11 +80,21 @@ var MocaResultTimeline = (function() {
 		this.dashboard_items = null;
 		this.timeline_container = document.getElementById('visualization_timeline');
 		this.data = new Array();
+		this.timeline_groups = new vis.DataSet();
 		this.timeline_items = new vis.DataSet(this.data);
 		this.timeline_options = 
 		{
-			rtl : true,
-			showCurrentTime: true
+			//rtl : true,
+			showCurrentTime: true,
+			groupOrder: 'content',
+			stack: true,
+		    verticalScroll: true,
+		    zoomable: false,
+		    //zoomKey: 'ctrlKey',
+		    minHeight: 200,
+		    maxHeight: 300,
+		    start: vis.moment().add(-5, 'seconds'),
+		    end: vis.moment().add(5, 'seconds'),
 		};
 		this.timeline = new vis.Timeline(this.timeline_container, this.timeline_items, this.timeline_options);
 	}
@@ -93,7 +103,17 @@ var MocaResultTimeline = (function() {
 	 * 		    -> ajax 요청의 결과값을 받아서 데이터를 추가한다.
 	 */
 	MocaResultTimeline.prototype.retrieve = function(_this) {
+		_this.setGroups(_this, _this.dashboard_items.items.endpoint_list);
 		_this.setData(_this, _this.dashboard_items.items.moca_result);
+	}
+	
+	MocaResultTimeline.prototype.setGroups = function(_this, groups) {
+		if (_this.timeline_groups.length == 0) {
+			for (let i=0; i<groups.length; i++) {
+				_this.timeline_groups.add(groups[i]);
+			}
+			_this.timeline.setGroups(_this.timeline_groups);
+		} 
 	}
 	
 	/*
@@ -107,18 +127,39 @@ var MocaResultTimeline = (function() {
 		}
 		
 		_this.setEffect(_this);
+		
+		// remove all data points which are no longer visible
+	    var range = _this.timeline.getWindow();
+	    var interval = range.end - range.start;
+		
+	    var oldIds = _this.timeline_items.getIds(
+		{
+			filter: function (item) {
+				//console.log(_this.timeline_items.length);
+				return (new Date(item.end + 10 * interval) < range.start);
+		    }
+		});
+		_this.timeline_items.remove(oldIds);
+		
 	}
 	
 	/*
 	 * 메소드 3 : timeline 의 그래픽 이펙트를 처리한다.
 	 */
 	MocaResultTimeline.prototype.setEffect = function(_this) {
-		
+		/*
 		let _data = _this.getData();
-		
-		_this.timeline.focus(_data[_data.length-1].id, {animation: {duration: 1000, easingFunction: 'easeInOutQuad'}});
-		_this.timeline.fit();
-		
+		if (_data.length > 0) {
+			if (_data.length > 5) {
+				_this.timeline.moveTo(_data[_data.length-4].end);
+			} else {
+				_this.timeline.moveTo(_data[_data.length-1].end);
+			}
+		} else {
+			
+		}
+		*/
+		_this.timeline.moveTo(vis.moment().add(-4, 'seconds'));
 	}
 	
 	/*
@@ -301,6 +342,15 @@ $(document).ready(function() {
 		dashboard_items.clearInterval(dashboard_items);
 		mr_timeline.clearInterval(mr_timeline);
 		mr_streaming.clearInterval(mr_streaming);
+	});
+	
+	$('#zoomIn').click(function(e){
+		mr_timeline.timeline.zoomIn( 1);
+		
+	});
+	
+	$('#zoomOut').click(function(e){
+		mr_timeline.timeline.zoomOut( 1);
 	});
 	
 });

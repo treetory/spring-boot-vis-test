@@ -99,8 +99,8 @@
 				a.result_id,
 				a.create_ts as start,
 				ADDTIME(a.create_ts, '00:00:00.800') as end,
-				inet_ntoa(a.s_ip) as content,
-				a.rule as title
+				a.rule as title,
+				a.rule as content
 		FROM 
 				moca_rule 			as b, 
 				moca_attribute 		as c,

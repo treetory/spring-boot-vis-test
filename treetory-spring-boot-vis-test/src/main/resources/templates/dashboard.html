@@ -17,6 +17,10 @@
     	.visualization {
     	padding: 10px 10px 10px 10px;
     	}
+    	
+    	.vis-item .vis-item-content {
+		 overflow: visible;
+		}
   	</style>
 
 	<!-- Load jquery for ajax support -->
@@ -35,6 +39,8 @@
 		<p>
 			<input type="button" id="start" value="START"/>
 			<input type="button" id="stop" value="STOP"/>
+			<input type="button" id="zoomIn" value="ZOOM IN"/>
+			<input type="button" id="zoomOut" value="ZOOM OUT"/>
 		</p>
 	</div>
 	<div class="visualization" id="visualization_streaming"></div>

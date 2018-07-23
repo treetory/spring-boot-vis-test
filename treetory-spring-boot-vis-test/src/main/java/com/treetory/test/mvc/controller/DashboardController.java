@@ -46,7 +46,7 @@ public class DashboardController {
 			
 			items = dService.getDashboardItems(current);
 			
-			LOG.debug("{}", items.get("moca_result_count"));
+			//LOG.debug("{}", items.get("moca_result_count"));
 			
 		} catch (Exception e) {
 			throw e;
