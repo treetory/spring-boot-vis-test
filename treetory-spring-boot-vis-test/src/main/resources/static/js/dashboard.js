@@ -1,3 +1,74 @@
+var DashboardItems = (function() {
+	
+	/* 생성자 */
+	function DashboardItems() {
+		this.items = new Object();
+		this.interval = null;
+		this.retrieve_count = 0;
+	}
+	
+	/* 메소드 1 : 조회 메소드 
+	 * 		    -> ajax 요청의 결과값을 받아서 데이터를 추가한다.
+	 */
+	DashboardItems.prototype.retrieve = function(_this) {
+		$.ajax({
+			url : "/dashboard/items",
+			async : false,
+			method : "get",
+			dataType : "json",
+			contentType : "application/json;charset=UTF-8",
+			success : function(result) {
+				if (result != null || result != undefined) {
+					_this.items = result;
+					_this.retrieve_count++;
+				}
+				//console.log(_this.items);
+			},
+			timeout : 100000,
+			complete : function(jqXHR, textStatus) {
+				//console.log(jqXHR);
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR);
+			}
+		});
+	}
+	
+	/*
+	 * 메소드 2 : 해당 key 로 차트를 그리기 위한 데이터 가져가기
+	 */
+	DashboardItems.prototype.getItem = function(_this, key) {
+		return _this.items[key];
+	}
+	
+	/*
+	 * 메소드 3 : 설정한 시간 간격에 따라 조회 스케줄 등록
+	 */
+	DashboardItems.prototype.setInterval = function(_this, _interval) {
+		if (_this.interval == null) {
+			_this.interval = setInterval(function() {
+				_this.retrieve(_this);
+			}, _interval);
+		} else {
+			console.log("Already setted the interval.")
+		}
+	}
+	
+	/*
+	 * 메소드 4 : 등록된 조회 스케줄 취소
+	 */
+	DashboardItems.prototype.clearInterval = function(_this) {
+		if (_this.interval != null) {
+			clearInterval(_this.interval);
+			_this.retrieve_count = 0;
+		}
+		_this.interval = null;
+	}
+	
+	return DashboardItems;
+	
+}());
+
 
 /**
  * 타임라인 그래프를 moca_result 정보와 연동하여 테스트해 봄
@@ -6,6 +77,7 @@ var MocaResultTimeline = (function() {
 	
 	/* 생성자 */
 	function MocaResultTimeline() {
+		this.dashboard_items = null;
 		this.timeline_container = document.getElementById('visualization_timeline');
 		this.data = new Array();
 		this.timeline_items = new vis.DataSet(this.data);
@@ -21,27 +93,7 @@ var MocaResultTimeline = (function() {
 	 * 		    -> ajax 요청의 결과값을 받아서 데이터를 추가한다.
 	 */
 	MocaResultTimeline.prototype.retrieve = function(_this) {
-		$.ajax({
-			url : "/result/list",
-			async : false,
-			method : "get",
-			dataType : "json",
-			contentType : "application/json;charset=UTF-8",
-			success : function(result) {
-				if (result instanceof Array) {
-					if (result.length > 0) {
-						_this.setData(_this, result);
-					}
-				}
-			},
-			timeout : 100000,
-			complete : function(jqXHR, textStatus) {
-				//console.log(jqXHR);
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				console.log(jqXHR);
-			}
-		});
+		_this.setData(_this, _this.dashboard_items.items.moca_result);
 	}
 	
 	/*
@@ -79,11 +131,16 @@ var MocaResultTimeline = (function() {
 	/*
 	 * 메소드 5 : 설정한 시간 간격에 따라 조회 스케줄 등록
 	 */
-	MocaResultTimeline.prototype.setInterval = function(_this, _interval) {
-		_this.interval = setInterval(function() {
-			_this.retrieve(_this);
-			_this.retrieve_count++;
-		}, _interval);
+	MocaResultTimeline.prototype.setInterval = function(_this, _interval, _dashboard_items) {
+		if (_this.interval == null) {
+			_this.interval = setInterval(function() {
+				_this.retrieve(_this);
+				_this.retrieve_count++;
+			}, _interval);
+			_this.dashboard_items = _dashboard_items;
+		} else {
+			console.log("Already setted the interval.");
+		}
 	}
 	
 	/*
@@ -94,6 +151,7 @@ var MocaResultTimeline = (function() {
 			clearInterval(_this.interval);
 			_this.retrieve_count = 0;
 		}
+		_this.interval = null;
 	}
 	
 	return MocaResultTimeline;
@@ -111,6 +169,7 @@ var MocaResultStreamingDataGraph = (function() {
 		this.interval = null;
 		this.retrieve_count = 0;
 		this.mode = mode;
+		this.dashboard_items = null;
 		this.container = document.getElementById('visualization_streaming');
 		this.dataset = new vis.DataSet();
 		this.options = 
@@ -138,25 +197,7 @@ var MocaResultStreamingDataGraph = (function() {
 	 * 메소드 1 : 시계열 추이를 그리기 위한 실시간 집계 데이터 조회
 	 */
 	MocaResultStreamingDataGraph.prototype.retrieve = function(_this) {
-		$.ajax({
-			url : "/result/count",
-			async : false,
-			method : "get",
-			dataType : "json",
-			contentType : "application/json;charset=UTF-8",
-			success : function(result) {
-				if (result instanceof Object) {
-					_this.setData(_this, result);
-				}
-			},
-			timeout : 100000,
-			complete : function(jqXHR, textStatus) {
-				//console.log(jqXHR);
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				console.log(jqXHR);
-			}
-		});
+		_this.setData(_this, _this.dashboard_items.items.moca_result_count);
 	}
 	
 	/*
@@ -209,11 +250,17 @@ var MocaResultStreamingDataGraph = (function() {
 	/*
 	 * 메소드 4 : 설정한 시간 간격에 따라 조회 스케줄 등록
 	 */
-	MocaResultStreamingDataGraph.prototype.setInterval = function(_this, _interval) {
-		_this.interval = setInterval(function() {
-			_this.retrieve(_this);
-			_this.retrieve_count++;
-		}, _interval);
+	MocaResultStreamingDataGraph.prototype.setInterval = function(_this, _interval, _dashboard_items) {
+		if (_this.interval == null) {
+			_this.interval = setInterval(function() {
+				_this.retrieve(_this);
+				_this.retrieve_count++;
+			}, _interval);
+			_this.dashboard_items = _dashboard_items;
+		} else {
+			console.log("Already setted the interval.");
+		}
+		
 	}
 	
 	/*
@@ -224,6 +271,7 @@ var MocaResultStreamingDataGraph = (function() {
 			clearInterval(_this.interval);
 			_this.retrieve_count = 0;
 		}
+		_this.interval = null;
 	}
 	
 	return MocaResultStreamingDataGraph;
@@ -232,6 +280,8 @@ var MocaResultStreamingDataGraph = (function() {
 
 $(document).ready(function() {
 	
+	// 대시보드 아이템 조회 담당 객체 생성
+	let dashboard_items = new DashboardItems();
 	// 타임라인 객체 생성
 	let mr_timeline = new MocaResultTimeline();
 	// 스트리밍 데이터 그래프 객체 생성
@@ -239,15 +289,18 @@ $(document).ready(function() {
 	
 	// 시작 이벤트
 	$('#start').click(function(e){
-		mr_timeline.setInterval(mr_timeline, 3000);
-		mr_streaming.setInterval(mr_streaming, 3000);
+		dashboard_items.setInterval(dashboard_items, 3000);
+		mr_timeline.setInterval(mr_timeline, 3000, dashboard_items);
+		mr_streaming.setInterval(mr_streaming, 3000, dashboard_items);
+		console.log("count : "+dashboard_items.retrieve_count+" / "+"set the interval id ["+dashboard_items.interval+"].");
 	});
 	
 	// 정지 이벤트
 	$('#stop').click(function(e){
-		console.log(mr_timeline.retrieve_count+" : "+mr_streaming.retrieve_count);
-		mr_timeline.clearInterval(mr_timeline, 3000);
-		mr_streaming.clearInterval(mr_streaming, 3000);
+		console.log("count : "+dashboard_items.retrieve_count+" / "+"clear the interval id ["+dashboard_items.interval+"].");
+		dashboard_items.clearInterval(dashboard_items);
+		mr_timeline.clearInterval(mr_timeline);
+		mr_streaming.clearInterval(mr_streaming);
 	});
 	
 });

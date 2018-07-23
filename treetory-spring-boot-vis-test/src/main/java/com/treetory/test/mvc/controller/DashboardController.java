@@ -29,6 +29,33 @@ public class DashboardController {
 	private DashboardService dService;
 	
 	@RequestMapping(
+			value = "/dashboard/items", 
+			method = { RequestMethod.GET }, 
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+	public Map<String, Object> getDashboardItems(
+			HttpServletRequest req, HttpServletResponse res
+			) throws Exception {
+		
+		Map<String, Object> items = new HashMap<String, Object>();
+		
+		try {
+			
+			long current = System.currentTimeMillis();
+			
+			items = dService.getDashboardItems(current);
+			
+			LOG.debug("{}", items.get("moca_result_count"));
+			
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return items;		
+	}
+	
+	@RequestMapping(
 			value = "/result/list", 
 			method = { RequestMethod.GET }, 
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE }, 

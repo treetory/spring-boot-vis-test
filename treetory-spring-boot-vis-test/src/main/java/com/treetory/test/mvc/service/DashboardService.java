@@ -6,8 +6,10 @@ import java.util.Map;
 
 public interface DashboardService {
 
+	public Map<String, Object> getDashboardItems(long current) throws SQLException;
+	
 	public List<Map<String, Object>> getCorelResultDuringRecent10Seconds(long currentTime) throws SQLException;
 	
 	public Map<String, Object> getRecentMocaResultCount() throws SQLException;
-	
+
 }

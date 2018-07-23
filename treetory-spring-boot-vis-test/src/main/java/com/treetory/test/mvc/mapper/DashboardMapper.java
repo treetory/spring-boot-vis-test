@@ -15,4 +15,6 @@ public interface DashboardMapper {
 	
 	public Map<String, Object> getRecentMocaResultCount() throws SQLException;
 	
+	public List<Map<String, Object>> getEndpointAsset() throws SQLException;
+	
 }

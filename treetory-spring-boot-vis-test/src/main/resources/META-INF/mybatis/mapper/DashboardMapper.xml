@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.treetory.test.mvc.mapper.DashboardMapper">
 	
-	<!-- 조회 : 멀티 -->
+	<!-- 조회 : 멀티 
     <select id="getCorelResultDuringRecent10Seconds" parameterType="long" resultType="hashmap">
 		SELECT 
 				a.id as id, 
@@ -27,10 +27,6 @@
 				d.name as org_name,
 				e.name as proxy_name,
 				a.result_id,
-				<!-- 
-				FROM_UNIXTIME(FLOOR((#{value} - (10 * 1000)) / 1000)) as start,
-				FROM_UNIXTIME(FLOOR(#{value} / 1000)) as end
-				 -->
 				a.create_ts as start,
 				ADDTIME(a.create_ts, '00:00:00.800') as end,
 				inet_ntoa(a.s_ip) as content,
@@ -63,7 +59,8 @@
 			LIMIT	10
 		</if>
 	</select>
-	
+	-->
+	<!-- 상관분석 생성 개수 보여주기 위함 -->
 	<select id="getRecentMocaResultCount" resultType="hashmap">
 		SELECT	count(id) 	as alert_count
 		,		create_ts	as create_ts
@@ -73,6 +70,90 @@
 		ORDER BY
 				create_ts DESC
 		LIMIT	1
+	</select>
+	
+	<select id="getCorelResultDuringRecent10Seconds" parameterType="long" resultType="hashmap">
+		SELECT 
+				a.id as id, 
+		        h.id as "group",
+				convert( a.category, char) as category, 
+				concat(' ' , convert(a.create_ts, char)) as create_ts, 
+				a.message, 
+				inet_ntoa(a.s_ip) as s_ip_str,
+				a.s_ip as s_ip,  
+				inet_ntoa(a.d_ip) as d_ip_str, 
+				a.d_ip as d_ip, 
+				convert(a.s_port, char(5)) as s_port, 
+				convert(a.d_port, char(5)) as d_port, 
+				a.protocol_name as protocol_name,  
+				a.rule, 
+				c.code_name as rule_class_name, 
+				convert( a.dev_id, char) as dev_id, 
+				f.name,
+				a.is_ack, 
+				a.ack_user,
+				a.org_id,
+				a.proxy_id,
+				d.name as org_name,
+				e.name as proxy_name,
+				a.result_id,
+				a.create_ts as start,
+				ADDTIME(a.create_ts, '00:00:00.800') as end,
+				inet_ntoa(a.s_ip) as content,
+				a.rule as title
+		FROM 
+				moca_rule 			as b, 
+				moca_attribute 		as c,
+				moca_result 		as a
+		LEFT OUTER JOIN 
+				moca_org 			as d 
+		ON 		a.org_id = d.org_id 
+		LEFT OUTER JOIN 
+				moca_proxy_server 	as e
+		ON 		a.proxy_id = e.proxy_id
+		LEFT OUTER JOIN 
+				moca_device 		as f
+		ON 		a.dev_id = f.id
+		LEFT OUTER JOIN 
+				moca_device_group 	as g
+		ON 		f.group_id = g.id
+		INNER JOIN
+				tbl_endpoint_status	as h
+		ON		(a.s_ip = h.ip_addr OR a.d_ip = h.ip_addr)
+		WHERE 	c.major_code = 9
+		AND 	b.att_rule_class = c.minor_code
+		AND 	a.rule = b.name
+		<if test="value != null and value > 0">
+			AND		unix_timestamp(create_ts) * 1000 <![CDATA[>=]]> #{value} - (3 * 1000)
+			AND 	unix_timestamp(create_ts) * 1000 <![CDATA[< ]]>	#{value}
+		</if>
+		<if test="value == 0">
+			AND		a.s_ip != 0
+			LIMIT	10
+		</if>
+	</select>
+	
+	<select id="getEndpointAsset" resultType="hashmap">
+		SELECT	id					AS id
+		,		device_id			AS deviceId
+		,		ext_collector_id	AS extCollectorId
+		,		device_name			AS deviceName
+		,		group_id			AS groupId
+		,		group_name			AS groupName
+		,		host_id				AS hostId
+		,		host_name			AS hostName
+		,		ip_addr				AS ipAddr
+		,		inet_ntoa(ip_addr)	AS ipAddrStr
+		,		mac_addr			AS macAddr
+		,		status				AS status
+		,		virus_count			AS virusCount
+		,		open_ports			AS openPorts
+		,		online_status		AS onlineStatus
+		,		CASE WHEN online_status = 0 THEN "CONNECTED" ELSE "DISCONNECTED" END AS onlineStatusStr
+		,		check_time			AS checkTime
+		,		exist_yn			AS existYn
+		,		inet_ntoa(ip_addr) 	AS content
+		FROM	tbl_endpoint_status	
 	</select>
 	
 	<!-- Deprecated -->
