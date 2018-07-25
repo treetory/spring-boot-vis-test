@@ -156,6 +156,157 @@
 		FROM	tbl_endpoint_status	
 	</select>
 	
+	<select id="getVirusNormalizedLogStatisticsByName" resultType="hashmap">
+		SELECT	X.count 											as data
+		,		CASE WHEN X.signature_name is not null THEN X.signature_name ELSE 'UNKNOWN' END	as name
+		FROM	(
+				SELECT	count(Y.id)									as count
+				,		Y.base_date
+				,		Y.event_class
+				,		Y.signature_name
+				FROM	(
+						SELECT 	Z.*
+						,		date_format(Z.create_time, "%Y-%c")	as base_date
+						FROM 	mocalog_main	Z
+						WHERE	event_class = 'VIRUS'
+						)	Y
+				GROUP BY 
+						Y.base_date, 
+						Y.event_class,
+						Y.signature_name
+		        )	X
+		ORDER BY 
+				X.count DESC;
+	</select>
+	
+	<select id="getVirusNormalizedLogStatisticsByDip" resultType="hashmap">
+		SELECT	X.count 											as data
+		,		X.d_ip 												as name
+		FROM	(
+				SELECT	count(Y.id)									as count
+				,		Y.base_date
+				,		Y.event_class
+				,		inet_ntoa(Y.d_ip)							as d_ip
+				FROM	(
+						SELECT 	Z.*
+						,		date_format(Z.create_time, "%Y-%c")	as base_date
+						FROM 	mocalog_main	Z
+						WHERE	event_class = 'VIRUS'
+						)	Y
+				GROUP BY 
+						Y.base_date, 
+						Y.event_class,
+						Y.d_ip
+		        )	X
+		ORDER BY 
+				X.count DESC;
+	</select>
+	
+	<select id="getNacNormalizedLogStatisticsByEvent" resultType="hashmap">
+		SELECT	X.count 											as data
+		,		X.event 											as name
+		FROM	(
+				SELECT	count(Y.id)									as count
+				,		Y.base_date
+				,		Y.event_class
+				,		Y.event
+				FROM	(
+						SELECT 	Z.*
+						,		date_format(Z.create_time, "%Y-%c")	as base_date
+						FROM 	mocalog_main	Z
+						WHERE	event_class = 'NAC'
+						)	Y
+				GROUP BY 
+						Y.base_date, 
+						Y.event_class,
+						Y.event
+		        )	X
+		ORDER BY 
+				X.count DESC;
+	</select>
+	
+	<select id="getNacNormalizedLogStatisticsBySip" resultType="hashmap">
+		SELECT	X.count 											as data
+		,		X.s_ip 												as name
+		FROM	(
+				SELECT	count(Y.id)									as count
+				,		Y.base_date
+				,		Y.event_class
+				,		inet_ntoa(Y.s_ip)							as s_ip
+				FROM	(
+						SELECT 	Z.*
+						,		date_format(Z.create_time, "%Y-%c")	as base_date
+						FROM 	mocalog_main	Z
+						WHERE	event_class = 'NAC'
+						)	Y
+				GROUP BY 
+						Y.base_date, 
+						Y.event_class,
+						Y.s_ip
+		        )	X
+		ORDER BY 
+				X.count DESC;
+	</select>
+	
+	<select id="getMocaResultStatisticsByRule" resultType="hashmap">
+		<![CDATA[
+		SELECT	Y.count 											as data
+		,		Y.rule												as name
+		FROM	(
+				SELECT 	count(Z.id)									as count
+				,		Z.p_idx
+				,		Z.rule
+				FROM 	moca_result	Z
+				WHERE	Z.p_idx = (SELECT CASE WHEN month(now()) < 10 THEN concat(year(now()), '0', month(now()))  ELSE concat(year(now()), month(now())) END as p_idx FROM DUAL)
+				GROUP BY
+						Z.rule
+		        )	Y
+		ORDER BY
+				Y.count DESC
+		]]>
+	</select>
+	
+	<select id="getMocaResultStatisticsBySip" resultType="hashmap">
+		<![CDATA[
+		SELECT	Y.count 											as data
+		,		Y.s_ip												as name
+		FROM	(
+				SELECT 	count(Z.id)									as count
+				,		Z.p_idx
+				,		Z.rule
+		        ,		inet_ntoa(Z.s_ip)							as s_ip
+				FROM 	moca_result	Z
+				WHERE	Z.p_idx = (SELECT CASE WHEN month(now()) < 10 THEN concat(year(now()), '0', month(now()))  ELSE concat(year(now()), month(now())) END as p_idx FROM DUAL)
+		        AND		Z.s_ip != 0
+				GROUP BY
+						Z.rule, Z.s_ip
+		        )	Y
+		ORDER BY
+				Y.count DESC		
+		]]>
+	</select>
+	
+	<select id="getMocaResultStatisticsByDip" resultType="hashmap">
+		<![CDATA[
+		SELECT	Y.count 											as data
+		,		Y.d_ip												as name
+		FROM	(
+				SELECT 	count(Z.id)									as count
+				,		Z.p_idx
+				,		Z.rule
+		        ,		inet_ntoa(Z.d_ip)							as d_ip
+				FROM 	moca_result	Z
+				WHERE	Z.p_idx = (SELECT CASE WHEN month(now()) < 10 THEN concat(year(now()), '0', month(now()))  ELSE concat(year(now()), month(now())) END as p_idx FROM DUAL)
+		        AND		Z.d_ip != 0
+				GROUP BY
+						Z.rule, Z.d_ip
+		        )	Y
+		ORDER BY
+				Y.count DESC
+		;
+		]]>
+	</select>
+	
 	<!-- Deprecated -->
 	<!-- 테스트용 - mockup 생성을 위해 잠깐 만든 것임 -->
 	<insert id="insertMocaResultTest" parameterType="java.util.List">

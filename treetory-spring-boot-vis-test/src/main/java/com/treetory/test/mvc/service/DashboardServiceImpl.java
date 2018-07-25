@@ -24,6 +24,13 @@ public class DashboardServiceImpl implements DashboardService {
 		items.put("moca_result", dMapper.getCorelResultDuringRecent10Seconds(System.currentTimeMillis()));
 		items.put("moca_result_count", dMapper.getRecentMocaResultCount());
 		items.put("endpoint_list", dMapper.getEndpointAsset());
+		items.put("virus_stat_name", dMapper.getVirusNormalizedLogStatisticsByName());
+		items.put("virus_stat_dip", dMapper.getVirusNormalizedLogStatisticsByDip());
+		items.put("nac_stat_event", dMapper.getNacNormalizedLogStatisticsByEvent());
+		items.put("nac_stat_sip", dMapper.getNacNormalizedLogStatisticsBySip());
+		items.put("moca_stat_rule", dMapper.getMocaResultStatisticsByRule());
+		items.put("moca_stat_sip", dMapper.getMocaResultStatisticsBySip());
+		items.put("moca_stat_dip", dMapper.getMocaResultStatisticsByDip());
 		
 		return items;
 	}

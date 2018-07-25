@@ -1,4 +1,4 @@
-var DashboardItems = (function() {
+let DashboardItems = (function() {
 	
 	/* 생성자 */
 	function DashboardItems() {
@@ -73,7 +73,7 @@ var DashboardItems = (function() {
 /**
  * 타임라인 그래프를 moca_result 정보와 연동하여 테스트해 봄
  */
-var MocaResultTimeline = (function() {
+let MocaResultTimeline = (function() {
 	
 	/* 생성자 */
 	function MocaResultTimeline() {
@@ -121,7 +121,7 @@ var MocaResultTimeline = (function() {
 	MocaResultTimeline.prototype.setData = function(_this, result) {
 		
 		// add retrieved data to DataSet(timeline_items)
-		for (var i=0; i<result.length; i++) {
+		for (let i=0; i<result.length; i++) {
 			_this.timeline_items.add(result[i]);
 		}
 		
@@ -191,7 +191,7 @@ var MocaResultTimeline = (function() {
  * 타임라인 그래프를 moca_result 정보와 연동하여 테스트해 봄
  * @returns
  */
-var MocaResultStreamingDataGraph = (function() {
+let MocaResultStreamingDataGraph = (function() {
 	
 	/* 생성자 */
 	function MocaResultStreamingDataGraph(mode) {
@@ -241,9 +241,9 @@ var MocaResultStreamingDataGraph = (function() {
 			y: result.alert_count
 		});
 		// remove all data points which are no longer visible
-	    var range = _this.graph2d.getWindow();
-	    var interval = range.end - range.start;
-		var oldIds = _this.dataset.getIds(
+	    let range = _this.graph2d.getWindow();
+	    let interval = range.end - range.start;
+		let oldIds = _this.dataset.getIds(
 		{
 			filter: function (item) {
 				
@@ -315,6 +315,78 @@ var MocaResultStreamingDataGraph = (function() {
 	
 }());
 
+let MocaResultPieChart = (function() {
+	
+	/* 생성자 */
+	function MocaResultPieChart(id, options) {
+		this.interval = null;
+		this.retrieve_count = 0;
+		this.dashboard_items = null;
+		this.container = document.getElementById(id);
+		this.data = {
+				categories: [],
+				series: [
+					{
+			            name: 'Legend1',
+			            data: 10
+			        }
+		        ]
+		};
+		
+		this.options = options;
+		
+		this.pieChart = tui.chart.pieChart(this.container, this.data, this.options);
+	}
+	
+	/*
+	 * 메소드 1 : 실시간 집계 데이터 조회
+	 */
+	MocaResultPieChart.prototype.retrieve = function(_this) {
+		
+		_this.data.series = _this.dashboard_items.items.virus_stat_name;
+		
+		if (_this.pieChart != null) {
+			_this.pieChar = null;
+			while ( _this.container.hasChildNodes() ) { 
+				_this.container.removeChild( _this.container.firstChild ); 
+			}
+		}
+		
+		_this.pieChart = tui.chart.pieChart(_this.container, _this.data, _this.options);
+		
+	}
+	
+	/*
+	 * 메소드 4 : 설정한 시간 간격에 따라 조회 스케줄 등록
+	 */
+	MocaResultPieChart.prototype.setInterval = function(_this, _interval, _dashboard_items) {
+		if (_this.interval == null) {
+			_this.interval = setInterval(function() {
+				_this.retrieve(_this);
+				_this.retrieve_count++;
+			}, _interval);
+			_this.dashboard_items = _dashboard_items;
+		} else {
+			console.log("Already setted the interval.");
+		}
+		
+	}
+	
+	/*
+	 * 메소드 5 : 등록된 조회 스케줄 취소
+	 */
+	MocaResultPieChart.prototype.clearInterval = function(_this) {
+		if (_this.interval != null) {
+			clearInterval(_this.interval);
+			_this.retrieve_count = 0;
+		}
+		_this.interval = null;
+	}
+	
+	return MocaResultPieChart;
+	
+}());
+
 $(document).ready(function() {
 	
 	// 대시보드 아이템 조회 담당 객체 생성
@@ -323,12 +395,29 @@ $(document).ready(function() {
 	let mr_timeline = new MocaResultTimeline();
 	// 스트리밍 데이터 그래프 객체 생성
 	let mr_streaming = new MocaResultStreamingDataGraph("discrete");
+	// 파이차트
+	let mr_piechart = new MocaResultPieChart("visualization_pie", 
+			{
+				series: 
+				{
+					showLegend: false, 
+					labelAlign:'outer', 
+					startAngle: -90, 
+					endAngle: 90, 
+					radiusRange: ['70%', '100%']
+				}, 
+				legend:
+				{
+					visible:true
+				}
+			});
 	
 	// 시작 이벤트
 	$('#start').click(function(e){
 		dashboard_items.setInterval(dashboard_items, 3000);
 		mr_timeline.setInterval(mr_timeline, 3000, dashboard_items);
 		mr_streaming.setInterval(mr_streaming, 3000, dashboard_items);
+		mr_piechart.setInterval(mr_piechart, 3000, dashboard_items);
 		console.log("count : "+dashboard_items.retrieve_count+" / "+"set the interval id ["+dashboard_items.interval+"].");
 	});
 	
@@ -338,11 +427,11 @@ $(document).ready(function() {
 		dashboard_items.clearInterval(dashboard_items);
 		mr_timeline.clearInterval(mr_timeline);
 		mr_streaming.clearInterval(mr_streaming);
+		mr_piechart.clearInterval(mr_piechart);
 	});
 	
 	$('#zoomIn').click(function(e){
-		mr_timeline.timeline.zoomIn( 1);
-		
+		mr_timeline.timeline.zoomIn( 1);		
 	});
 	
 	$('#zoomOut').click(function(e){

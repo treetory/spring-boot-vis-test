@@ -17,4 +17,18 @@ public interface DashboardMapper {
 	
 	public List<Map<String, Object>> getEndpointAsset() throws SQLException;
 	
+	public List<Map<String, Object>> getVirusNormalizedLogStatisticsByName() throws SQLException;
+	
+	public List<Map<String, Object>> getVirusNormalizedLogStatisticsByDip() throws SQLException;
+	
+	public List<Map<String, Object>> getNacNormalizedLogStatisticsByEvent() throws SQLException;
+	
+	public List<Map<String, Object>> getNacNormalizedLogStatisticsBySip() throws SQLException;
+	
+	public List<Map<String, Object>> getMocaResultStatisticsByRule() throws SQLException;
+	
+	public List<Map<String, Object>> getMocaResultStatisticsBySip() throws SQLException;
+	
+	public List<Map<String, Object>> getMocaResultStatisticsByDip() throws SQLException;
+	
 }
