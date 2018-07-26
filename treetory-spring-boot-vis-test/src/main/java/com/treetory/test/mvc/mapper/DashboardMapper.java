@@ -13,7 +13,7 @@ public interface DashboardMapper {
 	
 	public int insertMocaResultTest(List<Map<String, Object>> param) throws SQLException;
 	
-	public Map<String, Object> getRecentMocaResultCount() throws SQLException;
+	public List<Map<String, Object>> getRecentMocaResultCount() throws SQLException;
 	
 	public List<Map<String, Object>> getEndpointAsset() throws SQLException;
 	

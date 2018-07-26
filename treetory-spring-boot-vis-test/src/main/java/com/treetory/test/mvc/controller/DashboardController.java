@@ -1,8 +1,6 @@
 package com.treetory.test.mvc.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +44,7 @@ public class DashboardController {
 			
 			items = dService.getDashboardItems(current);
 			
-			//LOG.debug("{}", items.get("moca_result_count"));
+			LOG.debug("{}", items.size());
 			
 		} catch (Exception e) {
 			throw e;
@@ -55,55 +53,4 @@ public class DashboardController {
 		return items;		
 	}
 	
-	@RequestMapping(
-			value = "/result/list", 
-			method = { RequestMethod.GET }, 
-			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
-			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    @ResponseStatus(HttpStatus.OK)
-	public List<Map<String, Object>> getCorelResult(
-			HttpServletRequest req, HttpServletResponse res
-			) throws Exception {
-		
-		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-		
-		try {
-			
-			long current = System.currentTimeMillis();
-			
-			LOG.debug("{}", current);
-			
-			result = dService.getCorelResultDuringRecent10Seconds(current);
-			
-			LOG.debug("{}", result);
-			
-		} catch (Exception e) {
-			throw e;
-		}
-		
-		return result;		
-	}
-	
-	@RequestMapping(
-			value = "/result/count", 
-			method = { RequestMethod.GET }, 
-			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
-			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    @ResponseStatus(HttpStatus.OK)
-	public Map<String, Object> getCorelResultCount(
-			HttpServletRequest req, HttpServletResponse res
-			) throws Exception {
-		
-		Map<String, Object> result = new HashMap<String, Object>();
-		
-		try {
-			
-			result = dService.getRecentMocaResultCount();
-			
-		} catch (Exception e) {
-			throw e;
-		}
-		
-		return result;		
-	}
 }

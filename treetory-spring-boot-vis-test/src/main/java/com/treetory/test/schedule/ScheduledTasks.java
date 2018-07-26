@@ -31,7 +31,7 @@ public class ScheduledTasks {
 	
 	private static int i = 0;
 	
-	@Scheduled(fixedRate = 1 * 1000)
+	//@Scheduled(fixedRate = 1 * 1000)
 	@Transactional(isolation=Isolation.DEFAULT, propagation=Propagation.REQUIRED, rollbackFor=SQLException.class)
 	public void sendCorelResultToSplunk() throws IOException, InterruptedException, SQLException, ParseException {
 		

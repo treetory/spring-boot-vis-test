@@ -41,7 +41,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public Map<String, Object> getRecentMocaResultCount() throws SQLException {
+	public List<Map<String, Object>> getRecentMocaResultCount() throws SQLException {
 		return dMapper.getRecentMocaResultCount();
 	}
 

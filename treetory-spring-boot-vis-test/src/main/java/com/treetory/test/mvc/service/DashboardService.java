@@ -10,6 +10,6 @@ public interface DashboardService {
 	
 	public List<Map<String, Object>> getCorelResultDuringRecent10Seconds(long currentTime) throws SQLException;
 	
-	public Map<String, Object> getRecentMocaResultCount() throws SQLException;
+	public List<Map<String, Object>> getRecentMocaResultCount() throws SQLException;
 
 }

@@ -60,16 +60,38 @@
 		</if>
 	</select>
 	-->
-	<!-- 상관분석 생성 개수 보여주기 위함 -->
+	<!-- 상관분석 생성 개수 보여주기 위함 : 5초 인터벌로 합산 -->
 	<select id="getRecentMocaResultCount" resultType="hashmap">
-		SELECT	count(id) 	as alert_count
-		,		create_ts	as create_ts
-		FROM	moca_result
+		<![CDATA[
+		SELECT	sum(Z.count) 				as alert_count
+		,		Z.create_ts					as create_ts
+		FROM	(
+				SELECT	count(id) 			as count
+				,		create_ts			as create_ts
+				FROM	moca_result
+				WHERE	unix_timestamp(create_ts) >= unix_timestamp(curdate()) 
+				AND 	unix_timestamp(create_ts) <= unix_timestamp(ADDDATE(curdate(), 1))
+				GROUP BY
+						create_ts
+				UNION
+				SELECT	0 					as count
+				,		now()				as create_ts
+				FROM	DUAL
+				UNION
+		        SELECT	0 					as count
+				,		ADDTIME(now(), -1)	as create_ts
+				FROM	DUAL
+		        UNION
+		        SELECT	0 					as count
+				,		ADDTIME(now(), -2)	as create_ts
+				FROM	DUAL
+				)	Z
 		GROUP BY
-				create_ts
+				Z.create_ts
 		ORDER BY
 				create_ts DESC
-		LIMIT	1
+		LIMIT	3
+		]]>
 	</select>
 	
 	<select id="getCorelResultDuringRecent10Seconds" parameterType="long" resultType="hashmap">
@@ -99,8 +121,7 @@
 				a.result_id,
 				a.create_ts as start,
 				ADDTIME(a.create_ts, '00:00:00.800') as end,
-				a.rule as title,
-				a.rule as content
+				a.rule as title
 		FROM 
 				moca_rule 			as b, 
 				moca_attribute 		as c,
@@ -166,10 +187,11 @@
 				,		Y.signature_name
 				FROM	(
 						SELECT 	Z.*
-						,		date_format(Z.create_time, "%Y-%c")	as base_date
+						,		date_format(Z.create_time, "%Y-%m")	as base_date
 						FROM 	mocalog_main	Z
 						WHERE	event_class = 'VIRUS'
 						)	Y
+				WHERE	Y.base_date = date_format(now(), "%Y-%m")
 				GROUP BY 
 						Y.base_date, 
 						Y.event_class,
@@ -189,10 +211,11 @@
 				,		inet_ntoa(Y.d_ip)							as d_ip
 				FROM	(
 						SELECT 	Z.*
-						,		date_format(Z.create_time, "%Y-%c")	as base_date
+						,		date_format(Z.create_time, "%Y-%m")	as base_date
 						FROM 	mocalog_main	Z
 						WHERE	event_class = 'VIRUS'
 						)	Y
+				WHERE	Y.base_date = date_format(now(), "%Y-%m")
 				GROUP BY 
 						Y.base_date, 
 						Y.event_class,
@@ -212,10 +235,11 @@
 				,		Y.event
 				FROM	(
 						SELECT 	Z.*
-						,		date_format(Z.create_time, "%Y-%c")	as base_date
+						,		date_format(Z.create_time, "%Y-%m")	as base_date
 						FROM 	mocalog_main	Z
 						WHERE	event_class = 'NAC'
 						)	Y
+				WHERE	Y.base_date = date_format(now(), "%Y-%m")
 				GROUP BY 
 						Y.base_date, 
 						Y.event_class,
@@ -235,10 +259,11 @@
 				,		inet_ntoa(Y.s_ip)							as s_ip
 				FROM	(
 						SELECT 	Z.*
-						,		date_format(Z.create_time, "%Y-%c")	as base_date
+						,		date_format(Z.create_time, "%Y-%m")	as base_date
 						FROM 	mocalog_main	Z
 						WHERE	event_class = 'NAC'
 						)	Y
+				WHERE	Y.base_date = date_format(now(), "%Y-%m")
 				GROUP BY 
 						Y.base_date, 
 						Y.event_class,
@@ -279,7 +304,7 @@
 				WHERE	Z.p_idx = (SELECT CASE WHEN month(now()) < 10 THEN concat(year(now()), '0', month(now()))  ELSE concat(year(now()), month(now())) END as p_idx FROM DUAL)
 		        AND		Z.s_ip != 0
 				GROUP BY
-						Z.rule, Z.s_ip
+						Z.s_ip
 		        )	Y
 		ORDER BY
 				Y.count DESC		
@@ -299,7 +324,7 @@
 				WHERE	Z.p_idx = (SELECT CASE WHEN month(now()) < 10 THEN concat(year(now()), '0', month(now()))  ELSE concat(year(now()), month(now())) END as p_idx FROM DUAL)
 		        AND		Z.d_ip != 0
 				GROUP BY
-						Z.rule, Z.d_ip
+						Z.d_ip
 		        )	Y
 		ORDER BY
 				Y.count DESC
