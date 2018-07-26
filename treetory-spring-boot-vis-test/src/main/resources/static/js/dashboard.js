@@ -446,7 +446,7 @@ $(document).ready(function() {
 				{
 					width: 400,
 					height: 320,
-					title: "바이러스별 감염통계"
+					title: "바이러스별 감염통계(당월)"
 				},
 				series: 
 				{
@@ -468,7 +468,7 @@ $(document).ready(function() {
 				{
 					width: 400,
 					height: 320,
-					title: "IP별 바이러스 감염횟수"
+					title: "IP별 바이러스 감염횟수(당월)"
 				},
 				series: 
 				{
@@ -490,7 +490,7 @@ $(document).ready(function() {
 				{
 					width: 400,
 					height: 320,
-					title: "NAC 이벤트별 통계"
+					title: "NAC 이벤트별 통계(당월)"
 				},
 				series: 
 				{
@@ -512,7 +512,7 @@ $(document).ready(function() {
 				{
 					width: 400,
 					height: 320,
-					title: "NAC IP별 이벤트 발생횟수"
+					title: "NAC IP별 이벤트 발생횟수(당월)"
 				},
 				series: 
 				{
@@ -534,7 +534,7 @@ $(document).ready(function() {
 				{
 					width: 400,
 					height: 320,
-					title: "상관규칙 별 발생횟수(월별)"
+					title: "상관규칙 별 발생횟수(당월)"
 				},
 				series: 
 				{
@@ -556,7 +556,7 @@ $(document).ready(function() {
 				{
 					width: 400,
 					height: 320,
-					title: "SIP 별 상관성 이벤트 발생횟수(월별)"
+					title: "SIP 별 상관성 이벤트 발생횟수(당월)"
 				},
 				series: 
 				{
@@ -578,7 +578,7 @@ $(document).ready(function() {
 				{
 					width: 400,
 					height: 320,
-					title: "DIP 별 상관성 이벤트 발생횟수(월별)"
+					title: "DIP 별 상관성 이벤트 발생횟수(당월)"
 				},
 				series: 
 				{
