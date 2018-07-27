@@ -93,7 +93,7 @@ let MocaResultTimeline = (function() {
 			showCurrentTime: true,
 			groupOrder: 'content',
 			stack: false,
-			type: 'box',	// 'box', 'point', 'range'
+			type: 'point',	// 'box', 'point', 'range'
 		    verticalScroll: true,
 		    zoomable: false,
 		    //zoomKey: 'ctrlKey',
@@ -236,7 +236,7 @@ let MocaResultStreamingDataGraph = (function() {
 		    	style: 'circle' // square, circle
 		    },
 		    shaded: {
-		    	orientation: 'top' // top, bottom
+		    	orientation: 'bottom' // top, bottom
 		    },
 		    zoomable: false,
 		    graphHeight: 300
@@ -278,7 +278,7 @@ let MocaResultStreamingDataGraph = (function() {
 		{
 			filter: function (item) {
 				
-				if (_this.options.dataAxis.left.range.max == 1) {
+				if (_this.options.dataAxis.left.range.max <= item.y) {
 					_this.options.dataAxis.left.range.max = (item.y + 10);
 					_this.graph2d.setOptions(_this.options);
 				}

@@ -12,8 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -31,6 +33,9 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
@@ -202,6 +207,32 @@ public class ApplicationConfiguration implements InitializingBean, ApplicationLi
     			"classpath:/static/fonts/"
     			)
     	.setCachePeriod(600).resourceChain(true).addResolver(new PathResourceResolver());
+    }
+    
+    @Description("Every excutable tasks is executed by this ThreadPoolTaskExecutor.")
+    public TaskExecutor taskExecutor() {
+        ThreadPoolTaskExecutor te = new ThreadPoolTaskExecutor();
+        te.setCorePoolSize(20);
+        te.setMaxPoolSize(100);
+        te.setQueueCapacity(1000);
+        te.setThreadGroupName("task");
+        te.setThreadNamePrefix("task");
+        te.setWaitForTasksToCompleteOnShutdown(true);
+        
+        return te;
+    }
+    
+    @Bean(name = "objectMapper")
+    @Description("This bean is used by MappingJackson2HttpMessageConverter.")
+    public ObjectMapper objectMapper() {
+    	ObjectMapper om = new ObjectMapper();
+    	return om;
+    }
+    
+    @Bean(name = "gson")
+    @Description("This bean is used to handle(read and write) json String.")
+    public Gson gson() {
+    	return new Gson();
     }
     
     @Override

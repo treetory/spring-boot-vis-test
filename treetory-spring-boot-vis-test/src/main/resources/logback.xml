@@ -59,7 +59,7 @@
 	<logger name="com.treetory.test">
 		<level value="ERROR" />
 	</logger>
-	<logger name="com.treetory.test.mvc.controller">
+	<logger name="com.treetory.test.mvc">
 		<level value="DEBUG" />
 	</logger>
 	<logger name="com.treetory.test.mvc.mapper">

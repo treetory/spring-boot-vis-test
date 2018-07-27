@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.treetory.test.mvc.service.DashboardService;
 
 @RestController
@@ -25,6 +26,9 @@ public class DashboardController {
 	
 	@Autowired
 	private DashboardService dService;
+	
+	@Autowired
+	private Gson gson;
 	
 	@RequestMapping(
 			value = "/dashboard/items", 
@@ -42,9 +46,10 @@ public class DashboardController {
 			
 			long current = System.currentTimeMillis();
 			
-			items = dService.getDashboardItems(current);
+			//items = dService.getDashboardItems(current);
+			items = dService.getDashboardItemsFromJson(current);
 			
-			LOG.debug("{}", items.size());
+			LOG.debug("{}", gson.toJson(items.get("moca_result")));
 			
 		} catch (Exception e) {
 			throw e;
