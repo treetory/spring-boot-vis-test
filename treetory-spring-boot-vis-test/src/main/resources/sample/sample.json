@@ -1,0 +1,906 @@
+{
+	"virus_stat_name": [
+		{
+			"data": 682,
+			"name": "EICAR Test String"
+		},
+		{
+			"data": 8,
+			"name": "UNKNOWN"
+		},
+		{
+			"data": 8,
+			"name": "Trojan.Gen.2"
+		},
+		{
+			"data": 6,
+			"name": "Heur.AdvML.C"
+		},
+		{
+			"data": 6,
+			"name": "Heur.AdvML.B"
+		},
+		{
+			"data": 4,
+			"name": "Trojan Horse"
+		},
+		{
+			"data": 2,
+			"name": "W32.IRCBot"
+		},
+		{
+			"data": 2,
+			"name": "Backdoor.Trojan"
+		},
+		{
+			"data": 2,
+			"name": "Adware.Purityscan"
+		},
+		{
+			"data": 1,
+			"name": "W32.Almanahe.B"
+		},
+		{
+			"data": 1,
+			"name": "W32.Padmer"
+		},
+		{
+			"data": 1,
+			"name": "Trojan.Gen"
+		},
+		{
+			"data": 1,
+			"name": "W32.Forever.Worm"
+		},
+		{
+			"data": 1,
+			"name": "Spyware.Perfect"
+		},
+		{
+			"data": 1,
+			"name": "Backdoor.Tidserv"
+		},
+		{
+			"data": 1,
+			"name": "W32.SillyFDC"
+		}
+	],
+	"moca_result": [
+		{	
+			"s_port":"0",
+			"s_ip":2886729741,
+			"create_ts":" 2018-07-27 10:34:45",
+			"rule_class_name":"ANOMALY",
+			"start":"Jul 27, 2018 10:34:45 AM",
+			"rule":"NAC BLOCK 이벤트 탐지",
+			"proxy_id":9991,
+			"message":"NAC BLOCK [Virtual Firewall - Limit Inbound] 이벤트 탐지 [172.16.0.13 \u003e 172.16.0.21:13000]",
+			"d_ip":2886729749,
+			"title":"NAC BLOCK 이벤트 탐지",
+			"proxy_name":"9991",
+			"d_port":"13000",
+			"dev_id":"5",
+			"org_id":9991,
+			"result_id":1624,
+			"name":"CounterACT",
+			"is_ack":"NO",
+			"end":"Jul 27, 2018 10:34:45 AM",
+			"id":185131,
+			"org_name":"DOOSAN TEST",
+			"d_ip_str":"172.16.0.21",
+			"s_ip_str":"172.16.0.13",
+			"group":2,
+			"protocol_name":"TCP"
+		},
+		{
+			"s_port":"0",
+			"s_ip":2886729741,
+			"create_ts":" 2018-07-27 10:34:47",
+			"rule_class_name":"SIEM",
+			"start":"Jul 27, 2018 10:34:47 AM",
+			"rule":"NAC BLOCK 이벤트 탐지",
+			"proxy_id":9991,
+			"message":"NAC BLOCK [Virtual Firewall - Limit Inbound] 이벤트 탐지 [172.16.0.13 \u003e 172.16.0.21:13000]",
+			"d_ip":2886729749,
+			"title":"NAC BLOCK 이벤트 탐지",
+			"proxy_name":"9991",
+			"d_port":"13000",
+			"dev_id":"5",
+			"org_id":9991,
+			"result_id":1625,
+			"name":"CounterACT",
+			"is_ack":"NO",
+			"end":"Jul 27, 2018 10:34:47 AM",
+			"id":185132,
+			"org_name":"DOOSAN TEST",
+			"d_ip_str":"172.16.0.21",
+			"s_ip_str":"172.16.0.13",
+			"group":2,
+			"protocol_name":"TCP"
+		},
+		{
+			"s_port":"0",
+			"s_ip":2886729742,
+			"create_ts":" 2018-07-27 10:34:45",
+			"rule_class_name":"SIEM",
+			"start":"Jul 27, 2018 10:34:45 AM",
+			"rule":"NAC BLOCK 이벤트 탐지",
+			"proxy_id":9991,
+			"message":"NAC BLOCK [Virtual Firewall - Limit Outboun] 이벤트 탐지 [172.16.0.14 \u003e 8.8.8.8:53]",
+			"d_ip":134744072,
+			"title":"NAC BLOCK 이벤트 탐지",
+			"proxy_name":"9991",
+			"d_port":"53",
+			"dev_id":"5",
+			"org_id":9991,
+			"result_id":1623,
+			"name":"CounterACT",
+			"is_ack":"NO",
+			"end":"Jul 27, 2018 10:34:45 AM",
+			"id":185130,
+			"org_name":"DOOSAN TEST",
+			"d_ip_str":"8.8.8.8",
+			"s_ip_str":"172.16.0.14",
+			"group":3,"protocol_name":"UDP"
+			}
+	],
+	"moca_stat_sip": [
+		{
+			"data": 480,
+			"name": "8.8.8.8"
+		},
+		{
+			"data": 459,
+			"name": "172.16.0.25"
+		},
+		{
+			"data": 450,
+			"name": "172.16.0.26"
+		},
+		{
+			"data": 448,
+			"name": "37.48.82.67"
+		},
+		{
+			"data": 448,
+			"name": "193.45.6.7"
+		},
+		{
+			"data": 448,
+			"name": "94.75.236.123"
+		},
+		{
+			"data": 446,
+			"name": "80.231.123.131"
+		},
+		{
+			"data": 338,
+			"name": "172.16.0.14"
+		},
+		{
+			"data": 160,
+			"name": "172.16.0.6"
+		},
+		{
+			"data": 78,
+			"name": "172.16.0.13"
+		},
+		{
+			"data": 58,
+			"name": "103.254.155.2"
+		},
+		{
+			"data": 48,
+			"name": "43.249.37.43"
+		},
+		{
+			"data": 46,
+			"name": "180.87.4.212"
+		},
+		{
+			"data": 44,
+			"name": "172.16.0.4"
+		},
+		{
+			"data": 20,
+			"name": "172.16.0.3"
+		},
+		{
+			"data": 18,
+			"name": "50.100.100.107"
+		},
+		{
+			"data": 16,
+			"name": "50.100.100.244"
+		},
+		{
+			"data": 16,
+			"name": "50.100.100.47"
+		},
+		{
+			"data": 16,
+			"name": "50.100.100.112"
+		},
+		{
+			"data": 12,
+			"name": "50.100.100.204"
+		},
+		{
+			"data": 12,
+			"name": "50.100.100.151"
+		},
+		{
+			"data": 10,
+			"name": "50.100.100.216"
+		},
+		{
+			"data": 8,
+			"name": "50.100.100.199"
+		},
+		{
+			"data": 8,
+			"name": "50.100.100.236"
+		},
+		{
+			"data": 8,
+			"name": "172.217.31.174"
+		},
+		{
+			"data": 8,
+			"name": "50.100.100.41"
+		},
+		{
+			"data": 8,
+			"name": "50.100.100.245"
+		},
+		{
+			"data": 6,
+			"name": "50.100.100.173"
+		},
+		{
+			"data": 6,
+			"name": "180.87.4.141"
+		},
+		{
+			"data": 6,
+			"name": "50.100.100.185"
+		},
+		{
+			"data": 6,
+			"name": "91.189.89.199"
+		},
+		{
+			"data": 5,
+			"name": "10.10.2.123"
+		},
+		{
+			"data": 4,
+			"name": "113.29.189.165"
+		},
+		{
+			"data": 4,
+			"name": "50.100.100.42"
+		},
+		{
+			"data": 4,
+			"name": "50.100.100.48"
+		},
+		{
+			"data": 4,
+			"name": "180.87.4.145"
+		},
+		{
+			"data": 2,
+			"name": "50.100.100.46"
+		},
+		{
+			"data": 2,
+			"name": "91.189.89.198"
+		},
+		{
+			"data": 2,
+			"name": "91.189.91.157"
+		},
+		{
+			"data": 2,
+			"name": "91.189.91.23"
+		},
+		{
+			"data": 2,
+			"name": "180.87.4.143"
+		},
+		{
+			"data": 2,
+			"name": "180.87.4.214"
+		}
+	],
+	"nac_stat_event": [
+		{
+			"data": 2906,
+			"name": "BLOCK"
+		},
+		{
+			"data": 581,
+			"name": "SCAN"
+		},
+		{
+			"data": 512,
+			"name": "LOCKDOWN"
+		},
+		{
+			"data": 59,
+			"name": "MAIL_ANOMALY_RECIPIENT"
+		},
+		{
+			"data": 46,
+			"name": "MAIL_ANOMALY_ATTACHMENT"
+		},
+		{
+			"data": 45,
+			"name": "BITE"
+		},
+		{
+			"data": 45,
+			"name": "MAIL_INFECTION_ATTEMPT"
+		},
+		{
+			"data": 45,
+			"name": "MAIL_ANOMALY_SERVER"
+		},
+		{
+			"data": 45,
+			"name": "MAIL_ANOMALY_SENDER"
+		},
+		{
+			"data": 45,
+			"name": "MAIL_ANOMALY_AMOUNT"
+		}
+	],
+	"moca_stat_dip": [
+		{
+			"data": 2196,
+			"name": "172.16.0.14"
+		},
+		{
+			"data": 1086,
+			"name": "8.8.8.8"
+		},
+		{
+			"data": 700,
+			"name": "172.16.0.21"
+		},
+		{
+			"data": 60,
+			"name": "172.16.0.6"
+		},
+		{
+			"data": 59,
+			"name": "172.16.0.22"
+		},
+		{
+			"data": 48,
+			"name": "172.16.0.25"
+		},
+		{
+			"data": 24,
+			"name": "91.189.89.199"
+		},
+		{
+			"data": 20,
+			"name": "91.189.89.198"
+		},
+		{
+			"data": 8,
+			"name": "10.20.3.234"
+		},
+		{
+			"data": 5,
+			"name": "172.16.0.26"
+		},
+		{
+			"data": 3,
+			"name": "172.16.0.10"
+		},
+		{
+			"data": 3,
+			"name": "172.16.0.101"
+		},
+		{
+			"data": 2,
+			"name": "172.16.0.4"
+		},
+		{
+			"data": 2,
+			"name": "172.16.0.3"
+		},
+		{
+			"data": 2,
+			"name": "91.189.91.157"
+		}
+	],
+	"nac_stat_sip": [
+		{
+			"data": 581,
+			"name": "172.16.0.21"
+		},
+		{
+			"data": 512,
+			"name": "172.16.0.2"
+		},
+		{
+			"data": 353,
+			"name": "8.8.8.8"
+		},
+		{
+			"data": 320,
+			"name": "172.16.0.26"
+		},
+		{
+			"data": 319,
+			"name": "172.16.0.25"
+		},
+		{
+			"data": 312,
+			"name": "37.48.82.67"
+		},
+		{
+			"data": 312,
+			"name": "94.75.236.123"
+		},
+		{
+			"data": 312,
+			"name": "193.45.6.7"
+		},
+		{
+			"data": 310,
+			"name": "80.231.123.131"
+		},
+		{
+			"data": 285,
+			"name": "10.10.1.123"
+		},
+		{
+			"data": 264,
+			"name": "172.16.0.14"
+		},
+		{
+			"data": 80,
+			"name": "172.16.0.6"
+		},
+		{
+			"data": 53,
+			"name": "172.16.0.13"
+		},
+		{
+			"data": 45,
+			"name": "120.10.1.23"
+		},
+		{
+			"data": 43,
+			"name": "10.10.2.123"
+		},
+		{
+			"data": 33,
+			"name": "103.254.155.2"
+		},
+		{
+			"data": 31,
+			"name": "172.16.0.4"
+		},
+		{
+			"data": 28,
+			"name": "43.249.37.43"
+		},
+		{
+			"data": 23,
+			"name": "180.87.4.212"
+		},
+		{
+			"data": 15,
+			"name": "172.16.0.3"
+		},
+		{
+			"data": 9,
+			"name": "50.100.100.107"
+		},
+		{
+			"data": 8,
+			"name": "50.100.100.47"
+		},
+		{
+			"data": 8,
+			"name": "50.100.100.112"
+		},
+		{
+			"data": 8,
+			"name": "50.100.100.244"
+		},
+		{
+			"data": 6,
+			"name": "50.100.100.151"
+		},
+		{
+			"data": 6,
+			"name": "50.100.100.204"
+		},
+		{
+			"data": 5,
+			"name": "50.100.100.216"
+		},
+		{
+			"data": 4,
+			"name": "50.100.100.245"
+		},
+		{
+			"data": 4,
+			"name": "172.217.31.174"
+		},
+		{
+			"data": 4,
+			"name": "50.100.100.199"
+		},
+		{
+			"data": 4,
+			"name": "50.100.100.236"
+		},
+		{
+			"data": 4,
+			"name": "50.100.100.41"
+		},
+		{
+			"data": 3,
+			"name": "91.189.89.199"
+		},
+		{
+			"data": 3,
+			"name": "50.100.100.185"
+		},
+		{
+			"data": 3,
+			"name": "50.100.100.173"
+		},
+		{
+			"data": 3,
+			"name": "180.87.4.141"
+		},
+		{
+			"data": 2,
+			"name": "91.189.89.198"
+		},
+		{
+			"data": 2,
+			"name": "180.87.4.145"
+		},
+		{
+			"data": 2,
+			"name": "50.100.100.42"
+		},
+		{
+			"data": 2,
+			"name": "50.100.100.48"
+		},
+		{
+			"data": 2,
+			"name": "113.29.189.165"
+		},
+		{
+			"data": 1,
+			"name": "50.100.100.46"
+		},
+		{
+			"data": 1,
+			"name": "91.189.91.157"
+		},
+		{
+			"data": 1,
+			"name": "180.87.4.143"
+		},
+		{
+			"data": 1,
+			"name": "66.110.49.32"
+		},
+		{
+			"data": 1,
+			"name": "91.189.91.23"
+		},
+		{
+			"data": 1,
+			"name": "180.87.4.214"
+		}
+	],
+	"moca_stat_rule": [
+		{
+			"data": 2087,
+			"name": "NAC BLOCK 이벤트 탐지"
+		},
+		{
+			"data": 2080,
+			"name": "sychoitest071"
+		},
+		{
+			"data": 50,
+			"name": "VIRUS 감염"
+		},
+		{
+			"data": 1,
+			"name": "VIRUS 감염 시스템 통신"
+		}
+	],
+	"moca_result_count": [
+		{
+			"alert_count": 0,
+			"create_ts": ""
+		},
+		{
+			"alert_count": 0,
+			"create_ts": ""
+		},
+		{
+			"alert_count": 0,
+			"create_ts": ""
+		}
+	],
+	"endpoint_list": [
+		{
+			"hostName": "WIN-89434DIPUQV",
+			"groupId": "0",
+			"onlineStatus": 0,
+			"hostId": "1",
+			"deviceId": 28,
+			"deviceName": "KasperskySecurityCenter",
+			"ipAddr": 2130706433,
+			"content": "127.0.0.1",
+			"extCollectorId": 8,
+			"groupName": "관리 그룹",
+			"onlineStatusStr": "CONNECTED",
+			"checkTime": "Jul 17, 2018 8:34:30 PM",
+			"existYn": 1,
+			"id": 1,
+			"ipAddrStr": "127.0.0.1",
+			"virusCount": 0,
+			"status": "Warning"
+		},
+		{
+			"hostName": "DOOSAN-K-WS01",
+			"groupId": "0",
+			"onlineStatus": 1,
+			"hostId": "69",
+			"deviceId": 28,
+			"deviceName": "KasperskySecurityCenter",
+			"ipAddr": 2886729741,
+			"content": "172.16.0.13",
+			"extCollectorId": 8,
+			"groupName": "관리 그룹",
+			"onlineStatusStr": "DISCONNECTED",
+			"checkTime": "Jul 17, 2018 8:34:30 PM",
+			"existYn": 1,
+			"id": 2,
+			"ipAddrStr": "172.16.0.13",
+			"openPorts": "[{\"timestamp\":1.532209455E9,\"value\":\"5355/UDP\"}]",
+			"virusCount": 0,
+			"status": "OK"
+		},
+		{
+			"hostName": "DOOSAN-K-WS02",
+			"groupId": "0",
+			"onlineStatus": 1,
+			"hostId": "72",
+			"deviceId": 28,
+			"deviceName": "KasperskySecurityCenter",
+			"ipAddr": 2886729742,
+			"content": "172.16.0.14",
+			"extCollectorId": 8,
+			"groupName": "관리 그룹",
+			"onlineStatusStr": "DISCONNECTED",
+			"checkTime": "Jul 17, 2018 8:34:30 PM",
+			"existYn": 1,
+			"id": 3,
+			"ipAddrStr": "172.16.0.14",
+			"openPorts": "[{\"timestamp\":1.532184288E9,\"value\":\"5355/UDP\"}]",
+			"virusCount": 0,
+			"status": "OK"
+		},
+		{
+			"hostName": "doosan-k-e02~~8",
+			"groupId": "4",
+			"onlineStatus": 0,
+			"hostId": "73",
+			"deviceId": 28,
+			"deviceName": "KasperskySecurityCenter",
+			"ipAddr": 845440190,
+			"content": "50.100.100.190",
+			"extCollectorId": 8,
+			"groupName": "WORKGROUP",
+			"onlineStatusStr": "CONNECTED",
+			"checkTime": "Jul 17, 2018 8:34:30 PM",
+			"existYn": 1,
+			"id": 4,
+			"ipAddrStr": "50.100.100.190",
+			"virusCount": 0,
+			"status": "Warning"
+		},
+		{
+			"hostName": "doosan-k-e03.dsl.bell.ca",
+			"groupId": "8",
+			"onlineStatus": 0,
+			"hostId": "74",
+			"deviceId": 28,
+			"deviceName": "KasperskySecurityCenter",
+			"ipAddr": 845440212,
+			"content": "50.100.100.212",
+			"extCollectorId": 8,
+			"groupName": "dsl.bell.ca",
+			"onlineStatusStr": "CONNECTED",
+			"checkTime": "Jul 2, 2018 5:12:40 PM",
+			"existYn": 1,
+			"id": 5,
+			"ipAddrStr": "50.100.100.212",
+			"virusCount": 0,
+			"status": "OK"
+		},
+		{
+			"hostName": "WIN-KNSMFAGASKI",
+			"groupId": "FD43F9D4326464CA43A1DEE595B01455",
+			"onlineStatus": 1,
+			"hostId": "F5900152326464987E7139C52EA2C2AF",
+			"deviceId": 4,
+			"deviceName": "SymantecProtectionManager",
+			"ipAddr": 2886729750,
+			"content": "172.16.0.22",
+			"extCollectorId": 7,
+			"groupName": "내 회사",
+			"onlineStatusStr": "DISCONNECTED",
+			"checkTime": "Jul 24, 2018 6:00:40 PM",
+			"existYn": 1,
+			"id": 6,
+			"ipAddrStr": "172.16.0.22",
+			"openPorts": "[{\"timestamp\":1.532110481E9,\"value\":\"137/UDP\"}]",
+			"virusCount": 0,
+			"status": "OK"
+		},
+		{
+			"hostName": "doosan-s-e01",
+			"groupId": "FD43F9D4326464CA43A1DEE595B01455",
+			"onlineStatus": 0,
+			"hostId": "82989D9D3264649822254F48F5930E9D",
+			"deviceId": 4,
+			"deviceName": "SymantecProtectionManager",
+			"ipAddr": 2886729738,
+			"content": "172.16.0.10",
+			"extCollectorId": 7,
+			"groupName": "내 회사",
+			"onlineStatusStr": "CONNECTED",
+			"checkTime": "Jul 24, 2018 6:00:40 PM",
+			"existYn": 1,
+			"id": 7,
+			"ipAddrStr": "172.16.0.10",
+			"openPorts": "null",
+			"virusCount": 0,
+			"status": "Warning"
+		},
+		{
+			"hostName": "doosan-s-e11",
+			"groupId": "FD43F9D4326464CA43A1DEE595B01455",
+			"onlineStatus": 0,
+			"hostId": "3B68FAF33264649822254F4864DDCB96",
+			"deviceId": 4,
+			"deviceName": "SymantecProtectionManager",
+			"ipAddr": 2886729829,
+			"content": "172.16.0.101",
+			"extCollectorId": 7,
+			"groupName": "내 회사",
+			"onlineStatusStr": "CONNECTED",
+			"checkTime": "Jul 24, 2018 6:00:40 PM",
+			"existYn": 1,
+			"id": 8,
+			"ipAddrStr": "172.16.0.101",
+			"virusCount": 0,
+			"status": "Warning"
+		},
+		{
+			"hostName": "doosan-s-WS01",
+			"groupId": "FD43F9D4326464CA43A1DEE595B01455",
+			"onlineStatus": 1,
+			"hostId": "3B32FED8AC1000167422CF7E6FF6DE00",
+			"deviceId": 4,
+			"deviceName": "SymantecProtectionManager",
+			"ipAddr": 2886729753,
+			"content": "172.16.0.25",
+			"extCollectorId": 7,
+			"groupName": "내 회사",
+			"onlineStatusStr": "DISCONNECTED",
+			"checkTime": "Jul 24, 2018 6:00:40 PM",
+			"existYn": 1,
+			"id": 9,
+			"ipAddrStr": "172.16.0.25",
+			"openPorts": "[{\"timestamp\":1.532058275E9,\"value\":\"5355/UDP\"}]",
+			"virusCount": 0,
+			"status": "OK"
+		},
+		{
+			"hostName": "doosan-s-WS02",
+			"groupId": "FD43F9D4326464CA43A1DEE595B01455",
+			"onlineStatus": 1,
+			"hostId": "E6FD8C8FAC1000167422CF7E2A832055",
+			"deviceId": 4,
+			"deviceName": "SymantecProtectionManager",
+			"ipAddr": 2886729754,
+			"content": "172.16.0.26",
+			"extCollectorId": 7,
+			"groupName": "내 회사",
+			"onlineStatusStr": "DISCONNECTED",
+			"checkTime": "Jul 24, 2018 6:00:40 PM",
+			"existYn": 1,
+			"id": 10,
+			"ipAddrStr": "172.16.0.26",
+			"openPorts": "[{\"timestamp\":1.531982726E9,\"value\":\"5355/UDP\"}]",
+			"virusCount": 0,
+			"status": "OK"
+		},
+		{
+			"hostName": "doosan-k-e01~~1991",
+			"groupId": "4",
+			"onlineStatus": 1,
+			"hostId": "77",
+			"deviceId": 28,
+			"deviceName": "VIRUS",
+			"ipAddr": 2886729733,
+			"content": "172.16.0.5",
+			"extCollectorId": 8,
+			"groupName": "WORKGROUP",
+			"onlineStatusStr": "DISCONNECTED",
+			"checkTime": "Jul 24, 2018 6:00:40 PM",
+			"existYn": 1,
+			"id": 11,
+			"ipAddrStr": "172.16.0.5",
+			"openPorts": "null",
+			"virusCount": 0,
+			"status": "Warning"
+		},
+		{
+			"hostName": "administrator-virtual-machine",
+			"groupId": "0B9501F4326464CA68B8CFFA4C1104DE",
+			"onlineStatus": 0,
+			"hostId": "0FCC7897AC1000165AA924E2F4C67CFE",
+			"deviceId": 4,
+			"deviceName": "VIRUS",
+			"ipAddr": 2886729732,
+			"content": "172.16.0.4",
+			"extCollectorId": 7,
+			"groupName": "내 회사\\기본 그룹",
+			"onlineStatusStr": "CONNECTED",
+			"checkTime": "Jul 24, 2018 6:00:40 PM",
+			"existYn": 1,
+			"id": 12,
+			"ipAddrStr": "172.16.0.4",
+			"virusCount": 0,
+			"status": "Warning"
+		}
+	],
+	"virus_stat_dip": [
+		{
+			"data": 682,
+			"name": "50.100.100.105"
+		},
+		{
+			"data": 37,
+			"name": "172.16.0.25"
+		},
+		{
+			"data": 2,
+			"name": "172.16.0.26"
+		},
+		{
+			"data": 2,
+			"name": "172.16.0.22"
+		},
+		{
+			"data": 2,
+			"name": "172.16.0.10"
+		},
+		{
+			"data": 2,
+			"name": "172.16.0.101"
+		}
+	]
+}

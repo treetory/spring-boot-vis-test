@@ -119,10 +119,11 @@ public class DashboardServiceImpl implements DashboardService {
 				endpoint.put("checkTime", new Date(current));
 			});
 			
-			moca_result.stream().forEachOrdered(data -> {
-				data.put("start", new Date((current / 1000 * 1000)));
-				data.put("end", new Date((current / 1000 * 1000)));
-			});
+			for (int i=0; i<moca_result.size(); i++) {
+				moca_result.get(i).put("start", new Date((current / 1000 * 1000)));
+				moca_result.get(i).put("end", new Date((current / 1000 * 1000)));
+				moca_result.get(i).put("id", (current / 1000) - (i));
+			}
 			
 			for (int i=0; i<moca_result_count.size(); i++) {
 				moca_result_count.get(i).put("alert_count", (int) (Math.random() * 20) + 1);
